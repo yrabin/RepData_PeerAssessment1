@@ -173,7 +173,7 @@ nrow(activity_data[is.na(activity_data$steps),])
 
 
 
-Let's fill up with the missing values with **median** in that interval.
+Let's fill up with the missing values with **median** in that 5-min interval.
 
 
 
@@ -181,22 +181,6 @@ Let's fill up with the missing values with **median** in that interval.
 
 #####3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
-
-```r
-interval_mediansteps <- with(na.omit(activity_data), aggregate(steps, list(interval), median))
-names(interval_mediansteps) <- c('interval', 'median_steps')
-head(interval_mediansteps)
-```
-
-```
-##   interval median_steps
-## 1        0            0
-## 2        5            0
-## 3       10            0
-## 4       15            0
-## 5       20            0
-## 6       25            0
-```
 
 ```r
 activity_data_filled <- activity_data
@@ -244,6 +228,13 @@ with(activity_data_filled, hist(rowsum(steps, date), main='Total Steps In A Day 
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png) 
+
+
+
+As we can see in the histogram above, imputing missing values with the median for the 5-min interval, increases the frequency on the lower end spectrum of number of steps. Consequently, this increase lowers the summary statistics values as confirmed by the table below.
+
+
+
 
 ```r
 with(activity_data_filled, summary(rowsum(steps, date)))
@@ -300,6 +291,6 @@ names(interval_day_mean) <- c('interval', 'day', 'meansteps')
 xyplot(meansteps ~ interval | day, data=interval_day_mean , type='l', layout=c(1,2), xlab='Interval', ylab='Number of Steps')
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-10-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
 
 

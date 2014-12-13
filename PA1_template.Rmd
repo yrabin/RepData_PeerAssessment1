@@ -107,7 +107,7 @@ nrow(activity_data[is.na(activity_data$steps),])
 
 
 
-Let's fill up with the missing values with **median** in that interval.
+Let's fill up with the missing values with **median** in that 5-min interval.
 
 
 
@@ -116,10 +116,6 @@ Let's fill up with the missing values with **median** in that interval.
 #####3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
 
 ```{r}
-interval_mediansteps <- with(na.omit(activity_data), aggregate(steps, list(interval), median))
-names(interval_mediansteps) <- c('interval', 'median_steps')
-head(interval_mediansteps)
-
 activity_data_filled <- activity_data
 activity_data_filled$steps[is.na(activity_data_filled$steps)] <- with(activity_data_filled, ave(steps, interval, 
    FUN = function(x) median(x, na.rm = TRUE)))[is.na(activity_data_filled$steps)]
@@ -138,6 +134,15 @@ head(activity_data_filled)
 
 ```{r}
 with(activity_data_filled, hist(rowsum(steps, date), main='Total Steps In A Day (NA replaced with Median)', xlab='Number of Steps'))
+```
+
+
+
+As we can see in the histogram above, imputing missing values with the median for the 5-min interval, increases the frequency on the lower end spectrum of number of steps. Consequently, this increase lowers the summary statistics values as confirmed by the table below.
+
+
+
+```{r}
 with(activity_data_filled, summary(rowsum(steps, date)))
 ```
 
