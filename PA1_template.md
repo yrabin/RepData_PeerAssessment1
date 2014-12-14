@@ -285,9 +285,39 @@ str(activity_data_filled)
 
 
 ```r
-library(lattice)
+# create the data frame
 interval_day_mean <- with(activity_data_filled, aggregate(steps, list(interval, day), mean))
 names(interval_day_mean) <- c('interval', 'day', 'meansteps')
+
+# see the new data frame
+str(interval_day_mean)
+```
+
+```
+## 'data.frame':	576 obs. of  3 variables:
+##  $ interval : int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ day      : Factor w/ 2 levels "weekday","weekend": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ meansteps: num  2.0222 0.4 0.1556 0.1778 0.0889 ...
+```
+
+```r
+# see the data
+head(interval_day_mean)
+```
+
+```
+##   interval     day  meansteps
+## 1        0 weekday 2.02222222
+## 2        5 weekday 0.40000000
+## 3       10 weekday 0.15555556
+## 4       15 weekday 0.17777778
+## 5       20 weekday 0.08888889
+## 6       25 weekday 1.31111111
+```
+
+```r
+# plot the data
+library(lattice)
 xyplot(meansteps ~ interval | day, data=interval_day_mean , type='l', layout=c(1,2), xlab='Interval', ylab='Number of Steps')
 ```
 

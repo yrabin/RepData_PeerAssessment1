@@ -171,9 +171,18 @@ str(activity_data_filled)
 
 
 ```{r}
-library(lattice)
+# create the data frame
 interval_day_mean <- with(activity_data_filled, aggregate(steps, list(interval, day), mean))
 names(interval_day_mean) <- c('interval', 'day', 'meansteps')
+
+# see the new data frame
+str(interval_day_mean)
+
+# see the data
+head(interval_day_mean)
+
+# plot the data
+library(lattice)
 xyplot(meansteps ~ interval | day, data=interval_day_mean , type='l', layout=c(1,2), xlab='Interval', ylab='Number of Steps')
 ```
 
